@@ -56,16 +56,14 @@
 @media (max-width:860px),(hover:none){
   .hero .wrap,.hero .names,.hero .duo{transform:none!important;opacity:1!important}
   .mandala{transform:translateY(-50%)!important;animation:spin 120s linear infinite}
-  #journey{height:auto;padding:52px 0 24px}
-  #journey .stage{position:static;height:auto;overflow:visible;padding-top:0;display:block}
+  #journey{height:auto;padding:44px 0 18px}
+  #journey .stage{position:static;height:auto;overflow:hidden;padding-top:0;display:block}
   #journey .j-head{margin-top:0}
   #journey h2 small{font-size:0}
-  #journey h2 small::after{content:"← स्वाइप करें · Swipe →";font-size:.95rem}
-  .ring-wrap{perspective:none;max-height:none;flex:none}
-  .ring{position:static;width:auto;height:auto;transform:none!important;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px 19vw 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-  .ring::-webkit-scrollbar{display:none}
-  .slide{position:relative;left:auto;top:auto;flex:0 0 62vw;max-width:260px;transform:none!important;filter:none!important;scroll-snap-align:center}
-  .j-floor{display:none}
+  #journey h2 small::after{content:"← स्वाइप करें, चक्र घूमेगा · Swipe to turn →";font-size:.95rem}
+  .ring-wrap{flex:none;max-height:none;perspective:1000px;perspective-origin:50% 50%;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+  .ring{top:50%}
+  .slide img{pointer-events:none}
   .j-dots{padding:6px 0 0}
   [data-reveal]{transform:translateY(22px);transition-duration:.6s}
   .card,.card:hover{transform:none}

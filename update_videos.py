@@ -1,7 +1,7 @@
 """Shankha Amrit site builder: pulls the YouTube feed, keeps videos.json,
 writes one SEO page per story, the sitemap, and pre-renders the home grid."""
-import html, json, re, sys, unicodedata, urllib.parse, urllib.request, xml.etree.ElementTree as ET
-from datetime import date
+import difflib, html, json, re, sys, time, unicodedata, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+from datetime import date, datetime
 from pathlib import Path
 
 CHANNEL = "UCpgKc7L2O35Zuy6jS-gI9CA"
@@ -73,6 +73,89 @@ def fetch(src=None):
             "views": int(st.get("views", 0)) if st is not None else 0,
         })
     return out
+
+
+UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+      "Accept-Language": "en-US,en;q=0.9"}
+
+
+def get(url):
+    return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30).read().decode("utf-8", "ignore")
+
+
+def initial_data(page):
+    m = re.search(r"var ytInitialData = (\{.*?\});</script>", page, re.S)
+    return json.loads(m.group(1)) if m else {}
+
+
+def walk(o, key):
+    if isinstance(o, dict):
+        if key in o: yield o[key]
+        for x in o.values(): yield from walk(x, key)
+    elif isinstance(o, list):
+        for x in o: yield from walk(x, key)
+
+
+def scrape_shorts():
+    """Newest-first (id, title) list from the channel's Shorts tab."""
+    out, seen = [], set()
+    for v in walk(initial_data(get("https://www.youtube.com/@ShankhaAmrit/shorts")), "shortsLockupViewModel"):
+        m = re.search(r'"videoId": "([\w-]{11})"', json.dumps(v))
+        title = v.get("overlayMetadata", {}).get("primaryText", {}).get("content")
+        if m and title and m.group(1) not in seen:
+            seen.add(m.group(1)); out.append((m.group(1), title))
+    return out
+
+
+def watch_info(vid):
+    page = get(f"https://www.youtube.com/watch?v={vid}")
+    m = re.search(r'"publishDate":\{"simpleText":"([^"]+)"', page)
+    d = datetime.strptime(m.group(1), "%b %d, %Y").date().isoformat() if m else date.today().isoformat()
+    desc = next(iter(walk(initial_data(page), "attributedDescription")), {}).get("content", "")
+    return {"date": d, "desc": desc}
+
+
+def skel(t):
+    """Consonant skeleton; Malayalam letters are mapped onto their Devanagari twins so
+    the Hindi and Malayalam titles of one story look alike."""
+    out = []
+    for c in re.sub(r"#\S+", "", t):
+        o = ord(c)
+        if 0x0D00 <= o <= 0x0D7F: o -= 0x400
+        if 0x0915 <= o <= 0x0939: out.append(chr(o))
+    return "".join(out)
+
+
+def group_stories(items):
+    """Shorts come as Malayalam/Hindi pairs of one story; give each pair one story number."""
+    n, S = len(items), [skel(x["title"]) for x in items]
+    cand = []
+    for i in range(n):
+        for j in range(i + 1, min(n, i + 5)):
+            if items[i]["lang"] != items[j]["lang"]:
+                cand.append((difflib.SequenceMatcher(None, S[i], S[j]).ratio(), i - j, i, j))
+    cand.sort(reverse=True)
+    mate = {}
+    for r, _, i, j in cand:
+        if r < 0.4: break
+        if i not in mate and j not in mate: mate[i] = j; mate[j] = i
+    free = [i for i in range(n) if i not in mate]
+    for a, b in zip(free, free[1:]):
+        if a not in mate and b not in mate and b == a + 1 and items[a]["lang"] != items[b]["lang"]:
+            mate[a] = b; mate[b] = a
+    sid = 0
+    for i in range(n):
+        if "story" in items[i]: continue
+        items[i]["story"] = sid
+        if i in mate: items[mate[i]]["story"] = sid
+        sid += 1
+
+
+STOPW = {"katha", "story", "malayalam", "hindi", "shorts", "short", "devotional", "kerala", "temple", "temples", "guruvayur", "the", "and"}
+
+
+def words_en(t):
+    return [w.lower() for w in re.findall(r"[A-Za-z]{4,}", re.sub(r"#\S+", "", t)) if w.lower() not in STOPW]
 
 
 def para(text):
@@ -214,7 +297,29 @@ def main(src=None):
     by = {v["id"]: v for v in old}
     for v in fresh:
         by[v["id"]] = {**by.get(v["id"], {}), **v}
-    videos = sorted(by.values(), key=lambda v: v["date"], reverse=True)
+    try:
+        shorts = scrape_shorts()
+    except Exception as e:
+        print("Shorts tab not read:", e); shorts = []
+    if shorts:
+        fetched = 0
+        for rank, (vid, title) in enumerate(shorts):
+            if vid not in by:
+                if fetched >= 40: continue
+                try:
+                    time.sleep(2.5); info = watch_info(vid); fetched += 1
+                except Exception as e:
+                    print("skip", vid, e); continue
+                by[vid] = {"id": vid, "title": title, "date": info["date"], "short": True,
+                           "lang": lang(title), "desc": info["desc"], "views": 0}
+        ids = [s[0] for s in shorts]
+        for v in by.values():
+            v.pop("rank", None); v.pop("story", None)
+        light = [{"id": vid, "title": title, "lang": lang(title)} for vid, title in shorts]
+        group_stories(light)
+        for rank, s in enumerate(light):
+            if s["id"] in by: by[s["id"]].update(rank=rank, story=s["story"])
+    videos = sorted(by.values(), key=lambda v: (v["date"], -v.get("rank", 9999)), reverse=True)
     for v in videos:
         v.setdefault("desc", ""); v.setdefault("views", 0)
         v["path"] = slug(v)

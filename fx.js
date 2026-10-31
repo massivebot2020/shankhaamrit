@@ -92,10 +92,12 @@
   var slides = [], R = 400, target = 0, angle = 0;
   function layoutRing() {
     if (!slides.length) return;
-    var w = Math.max(150, Math.min(250, window.innerWidth * 0.42));
+    var w = mobile.matches ? Math.max(150, Math.min(240, window.innerWidth * 0.5)) : Math.max(150, Math.min(250, window.innerWidth * 0.42));
     var n = slides.length, step = 360 / n;
     R = Math.round(w / 2 / Math.tan(Math.PI / n) + w * 0.25);
     ring.style.setProperty('--w', w + 'px');
+    var rw = journey.querySelector('.ring-wrap');
+    if (rw) rw.style.height = mobile.matches ? Math.round(w * 1.667 + 60) + 'px' : '';
     slides.forEach(function (s, i) { s.style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + R + 'px)'; });
   }
   function buildRing(videos) {
@@ -108,9 +110,24 @@
       var ka = keys(a.title); return keys(b.title).some(function (w) { return ka.indexOf(w) >= 0; });
     }
     var pick = [];
-    videos.forEach(function (v) {
-      if (pick.length < 12 && !pick.some(function (p) { return same(p, v); })) pick.push(v);
-    });
+    var shorts = videos.filter(function (v) { return v.short && v.story != null; }).sort(function (a, b) { return a.rank - b.rank; });
+    if (shorts.length >= 5) {
+      /* latest 15 different stories, alternating Malayalam / Hindi */
+      var byStory = {}, order = [];
+      shorts.forEach(function (v) {
+        if (!byStory[v.story]) { byStory[v.story] = {}; order.push(v.story); }
+        if (!byStory[v.story][v.lang]) byStory[v.story][v.lang] = v;
+      });
+      order.slice(0, 15).forEach(function (s, i) {
+        var want = i % 2 ? 'hi' : 'ml', other = i % 2 ? 'ml' : 'hi';
+        var v = byStory[s][want] || byStory[s][other];
+        if (v) pick.push(v);
+      });
+    } else {
+      videos.forEach(function (v) {
+        if (pick.length < 12 && !pick.some(function (p) { return same(p, v); })) pick.push(v);
+      });
+    }
     if (pick.length < 5) { journey.style.display = 'none'; return; }
     ring.textContent = '';
     slides = pick.map(function (v) {
@@ -118,7 +135,7 @@
       a.className = 'slide';
       a.href = v.path ? '/story/' + v.path + '.html' : 'https://www.youtube.com/watch?v=' + v.id;
       var img = document.createElement('img');
-      img.loading = 'lazy'; img.alt = '';
+      img.loading = 'lazy'; img.alt = ''; img.draggable = false;
       img.src = 'https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg';
       var b = document.createElement('b'); b.textContent = v.lang === 'ml' ? 'മലയാളം' : v.lang === 'hi' ? 'हिंदी' : 'English';
       var t = document.createElement('span'); t.textContent = v.title.replace(/#\S+/g, '').replace(/\s*\|.*$/, '').trim();
@@ -127,20 +144,40 @@
       return a;
     });
     if (dots) { dots.textContent = ''; slides.forEach(function () { dots.appendChild(document.createElement('i')); }); }
-    ring.addEventListener('scroll', function () {
-      if (!mobile.matches || !dots) return;
-      var w = slides[0].offsetWidth + 14, k = Math.round(ring.scrollLeft / w);
-      for (var j = 0; j < dots.children.length; j++) dots.children[j].className = j === k ? 'on' : '';
-    }, { passive: true });
-    if (mobile.matches && dots && dots.children[0]) dots.children[0].className = 'on';
     layoutRing();
     window.addEventListener('resize', layoutRing);
   }
+  /* touch: swipe left/right turns the wheel, with a little fling, then settles on a card */
+  var wrapEl = journey && journey.querySelector('.ring-wrap'), drag = null, dragged = false;
+  if (wrapEl) {
+    wrapEl.addEventListener('pointerdown', function (e) {
+      if (!mobile.matches || !slides.length) return;
+      drag = { id: e.pointerId, x: e.clientX, t0: target, last: e.clientX, lt: performance.now(), v: 0, moved: false };
+    });
+    wrapEl.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x, now = performance.now();
+      if (Math.abs(dx) > 6) drag.moved = true;
+      drag.v = 0.7 * drag.v + 0.3 * (e.clientX - drag.last) / Math.max(1, now - drag.lt);
+      drag.last = e.clientX; drag.lt = now;
+      target = drag.t0 - dx * (360 / slides.length) / (slides[0].offsetWidth * 0.9);
+    });
+    var endDrag = function () {
+      if (!drag) return;
+      var step = 360 / slides.length, fling = -drag.v * step * 1.6;
+      target = Math.round((target + Math.max(-2 * step, Math.min(2 * step, fling))) / step) * step;
+      dragged = drag.moved; drag = null;
+    };
+    wrapEl.addEventListener('pointerup', endDrag);
+    wrapEl.addEventListener('pointercancel', endDrag);
+    wrapEl.addEventListener('click', function (e) { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
+  }
+
   function updateRing() {
-    if (!slides.length || mobile.matches) return;
+    if (!slides.length) return;
     var n = slides.length, step = 360 / n;
     angle += (target - angle) * (reduce ? 1 : 0.12);
-    ring.style.transform = 'translateZ(' + (-R) + 'px) rotateX(-6deg) rotateY(' + (-angle) + 'deg)';
+    ring.style.transform = 'translateZ(' + (-R) + 'px) rotateX(' + (mobile.matches ? -1.5 : -6) + 'deg) rotateY(' + (-angle) + 'deg)';
     var front = ((Math.round(angle / step) % n) + n) % n;
     slides.forEach(function (s, i) {
       var d = ((i * step - angle) % 360 + 540) % 360 - 180; // -180..180, 0 = facing
