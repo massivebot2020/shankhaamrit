@@ -103,6 +103,7 @@
     function keys(t) { return (t.replace(/#\S+/g, '').match(/[A-Za-z]{4,}/g) || []).map(function (w) { return w.toLowerCase(); }).filter(function (w) { return !STOP[w]; }); }
     function same(a, b) {
       if (a.date === b.date && a.lang !== b.lang && a.short === b.short) return true;
+      if (a.title.split(/[\s:|]/)[0] === b.title.split(/[\s:|]/)[0]) return true;
       var ka = keys(a.title); return keys(b.title).some(function (w) { return ka.indexOf(w) >= 0; });
     }
     var pick = [];
