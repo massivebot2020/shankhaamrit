@@ -3,6 +3,7 @@
   var doc = document.documentElement;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hero = document.querySelector('.hero');
+  var mobile = window.matchMedia ? matchMedia('(max-width: 860px), (hover: none)') : { matches: false };
   var NS = 'http://www.w3.org/2000/svg';
 
   function el(tag, attrs, parent) {
@@ -126,11 +127,17 @@
       return a;
     });
     if (dots) { dots.textContent = ''; slides.forEach(function () { dots.appendChild(document.createElement('i')); }); }
+    ring.addEventListener('scroll', function () {
+      if (!mobile.matches || !dots) return;
+      var w = slides[0].offsetWidth + 14, k = Math.round(ring.scrollLeft / w);
+      for (var j = 0; j < dots.children.length; j++) dots.children[j].className = j === k ? 'on' : '';
+    }, { passive: true });
+    if (mobile.matches && dots && dots.children[0]) dots.children[0].className = 'on';
     layoutRing();
     window.addEventListener('resize', layoutRing);
   }
   function updateRing() {
-    if (!slides.length) return;
+    if (!slides.length || mobile.matches) return;
     var n = slides.length, step = 360 / n;
     angle += (target - angle) * (reduce ? 1 : 0.12);
     ring.style.transform = 'translateZ(' + (-R) + 'px) rotateX(-6deg) rotateY(' + (-angle) + 'deg)';
@@ -186,12 +193,12 @@
   function onScroll() {
     var y = window.scrollY, h = doc.scrollHeight - window.innerHeight;
     doc.style.setProperty('--sp', h > 0 ? (y / h).toFixed(4) : 0);
-    if (hero && !reduce) {
+    if (hero && !reduce && !mobile.matches) {
       var hp = Math.min(1, Math.max(0, y / hero.offsetHeight));
       hero.style.setProperty('--hp', hp.toFixed(4));
       hero.style.setProperty('--rot', (y * 0.06).toFixed(2) + 'deg');
     }
-    if (journey && slides.length) {
+    if (journey && slides.length && !mobile.matches) {
       var top = journey.offsetTop, span = journey.offsetHeight - window.innerHeight;
       var p = Math.min(1, Math.max(0, (y - top) / span));
       target = p * 360 * (slides.length - 1) / slides.length;
