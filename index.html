@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shankha Amrit · शंखामृत · ശംഖാമൃതം</title>
+<meta name="description" content="Shankha Amrit — Hindu and Kerala temple stories in Hindi and Malayalam. शंखामृत — पौराणिक कथाएँ। ശംഖാമൃതം — പുണ്യകഥകൾ.">
+<meta property="og:title" content="Shankha Amrit · शंखामृत · ശംഖാമൃതം">
+<meta property="og:description" content="Kerala temple legends and Hindu stories in Hindi and Malayalam.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#7a1f12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%237a1f12'/%3E%3Cpath d='M20 44c-4-10 2-24 14-26 8-1 13 5 11 11-2 5-8 6-11 3 5 1 7-4 4-6-4-3-11 1-12 9-1 5 1 9 4 11z' fill='%23e8b54a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#7a1f12; --red-deep:#4e130b; --gold:#e8b54a; --gold-soft:#f3d58c;
+  --paper:#fbf6ec; --ink:#2a1a12; --muted:#6e5a4c; --line:#e6d8c0; --card:#fffdf8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans","Noto Sans Devanagari","Noto Sans Malayalam",system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:rgba(78,19,11,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(232,181,74,.35)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold-soft)}
+.brand svg{width:36px;height:36px}
+.brand b{font-family:"Cormorant Garamond",serif;font-size:1.45rem;font-weight:700;letter-spacing:.02em}
+nav{display:flex;gap:22px;align-items:center}
+nav a{color:#f6e7c8;text-decoration:none;font-size:.95rem;opacity:.85}
+nav a:hover{opacity:1}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--red-deep);font-weight:600;text-decoration:none;padding:10px 18px;border-radius:999px;font-size:.95rem;transition:transform .15s,background .15s}
+.btn:hover{background:var(--gold-soft);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--gold-soft);border:1px solid rgba(232,181,74,.6)}
+nav .btn{padding:8px 16px;opacity:1}
+
+/* hero */
+.hero{background:radial-gradient(ellipse at 70% 20%,#9a2d17 0%,var(--red) 40%,var(--red-deep) 100%);color:#fbeed2;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 85% 30%,rgba(232,181,74,.06) 0 2px,transparent 2px 28px);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:72px;position:relative;z-index:1}
+.names{font-family:"Tiro Devanagari Hindi",serif;color:var(--gold);font-size:clamp(2.6rem,6vw,4.2rem);line-height:1.1}
+.names .ml{display:block;font-family:"Noto Sans Malayalam",sans-serif;font-weight:600;font-size:.62em;color:var(--gold-soft);margin-top:6px}
+.names .en{display:block;font-family:"Cormorant Garamond",serif;font-size:.5em;letter-spacing:.18em;text-transform:uppercase;color:#f1dcb0;margin-top:10px}
+.tag{margin-top:22px;font-size:1.08rem;max-width:34ch;color:#f4e3c3}
+.tag span{display:block;font-size:.95rem;opacity:.85;margin-top:4px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.player{aspect-ratio:9/16;max-height:560px;margin-left:auto;border-radius:18px;overflow:hidden;border:2px solid rgba(232,181,74,.55);box-shadow:0 30px 60px rgba(0,0,0,.35);background:#2a0b06;width:100%;max-width:315px}
+.player iframe{width:100%;height:100%;border:0;display:block}
+.player.wide{aspect-ratio:16/9;max-width:100%;max-height:none}
+.latest-label{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:right;margin-bottom:10px;max-width:315px;margin-left:auto}
+
+/* sections */
+section{padding:72px 0}
+h2{font-family:"Cormorant Garamond",serif;font-size:2.2rem;color:var(--red);line-height:1.15}
+h2 small{display:block;font-family:"Noto Sans Devanagari",sans-serif;font-size:1rem;color:var(--muted);font-weight:500;margin-top:6px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fbeed2}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(78,19,11,.14)}
+.thumb{position:relative;aspect-ratio:16/9;background:#e9dcc6 center/cover no-repeat}
+.badge{position:absolute;left:10px;top:10px;background:rgba(78,19,11,.88);color:var(--gold-soft);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:999px;letter-spacing:.04em}
+.card .t{padding:12px 14px 4px;font-size:.95rem;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .d{padding:0 14px 14px;font-size:.8rem;color:var(--muted);margin-top:auto}
+.more{text-align:center;margin-top:34px}
+.more .btn{background:var(--red);color:#fbeed2}
+
+/* about */
+.about{background:#f4ead8;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:30px}
+.col{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.col h3{font-family:"Cormorant Garamond",serif;font-size:1.35rem;color:var(--red);margin-bottom:8px}
+.col p{color:var(--muted);font-size:.95rem}
+.lead{max-width:62ch;margin-top:16px;color:var(--muted);font-size:1.05rem}
+
+/* subscribe band */
+.band{background:var(--red-deep);color:#fbeed2;text-align:center}
+.band h2{color:var(--gold)}
+.band p{margin:12px auto 26px;max-width:52ch;color:#efdcbc}
+
+footer{background:#2a0b06;color:#cdb898;font-size:.88rem;padding:28px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--gold-soft)}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:44px;gap:36px}
+  .player,.latest-label{margin-left:auto;margin-right:auto;text-align:center}
+  .cols{grid-template-columns:1fr}
+  nav a:not(.btn){display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Shankha Amrit home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#7a1f12" stroke="#e8b54a" stroke-width="2"/><path d="M20 44c-4-10 2-24 14-26 8-1 13 5 11 11-2 5-8 6-11 3 5 1 7-4 4-6-4-3-11 1-12 9-1 5 1 9 4 11z" fill="#e8b54a"/><path d="M24 46l-5 6h10z" fill="#e8b54a"/></svg>
+      <b>Shankha Amrit</b>
+    </a>
+    <nav>
+      <a href="#stories">कथाएँ · Stories</a>
+      <a href="#about">परिचय · About</a>
+      <a class="btn" href="https://www.youtube.com/@ShankhaAmrit?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1 class="names">शंखामृत<span class="ml">ശംഖാമൃതം</span><span class="en">Shankha Amrit</span></h1>
+        <p class="tag">केरल के मंदिरों और पुराणों की दिव्य कथाएँ — हिंदी और मलयालम में।
+          <span>Divine stories from Kerala's temples and the Puranas, in Hindi and Malayalam.</span></p>
+        <div class="cta">
+          <a class="btn" href="https://www.youtube.com/@ShankhaAmrit?sub_confirmation=1" target="_blank" rel="noopener">▶ YouTube पर देखें · Watch</a>
+          <a class="btn ghost" href="#stories">सभी कथाएँ · All stories</a>
+        </div>
+      </div>
+      <div>
+        <div class="latest-label">नवीनतम · Latest</div>
+        <div class="player" id="player"></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="stories">
+    <div class="wrap">
+      <div class="head">
+        <h2>कथाएँ · Stories<small>गुरुवायूर, सबरीमला, मुत्तप्पन, आदि शंकराचार्य और भी</small></h2>
+        <div class="filters" role="group" aria-label="Filter videos">
+          <button class="chip" data-f="all" aria-pressed="true">सभी · All</button>
+          <button class="chip" data-f="hi" aria-pressed="false">हिंदी</button>
+          <button class="chip" data-f="ml" aria-pressed="false">മലയാളം</button>
+          <button class="chip" data-f="long" aria-pressed="false">Full stories</button>
+          <button class="chip" data-f="short" aria-pressed="false">Shorts</button>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="more"><a class="btn" href="https://www.youtube.com/@ShankhaAmrit/videos" target="_blank" rel="noopener">और देखें · More on YouTube</a></div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <h2>परिचय · About<small>शंख की ध्वनि, कथा का अमृत</small></h2>
+      <p class="lead">Shankha Amrit retells the legends of Kerala's great temples and the timeless stories of the Puranas — Guruvayurappan and Unnikkannan, Swami Ayyappa, Sree Muthappan, Adi Shankaracharya and more — as illustrated films and Shorts for devotees everywhere.</p>
+      <div class="cols">
+        <div class="col"><h3>केरल की कथाएँ</h3><p>Temple legends from Guruvayur, Sabarimala, Parassinikadavu, Vaikom, Chottanikkara and Kalady.</p></div>
+        <div class="col"><h3>दो भाषाएँ</h3><p>Every story is made separately in Hindi and in Malayalam, each with its own narration.</p></div>
+        <div class="col"><h3>पर्व के साथ</h3><p>New stories arrive with the festivals — Ekadasi, Ashtami, Mandala season and Theyyam season.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Subscribe · सब्सक्राइब करें</h2>
+      <p>नई कथाओं के लिए चैनल सब्सक्राइब करें और 🔔 बेल दबाएँ। Subscribe and tap the bell for new stories.</p>
+      <a class="btn" href="https://www.youtube.com/@ShankhaAmrit?sub_confirmation=1" target="_blank" rel="noopener">▶ @ShankhaAmrit</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Shankha Amrit · Made by Santosh Roy</span>
+    <a href="https://www.youtube.com/@ShankhaAmrit" target="_blank" rel="noopener">youtube.com/@ShankhaAmrit</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var grid=document.getElementById('grid'), player=document.getElementById('player'), videos=[], filter='all';
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  function clean(t){return t.replace(/#\S+/g,'').replace(/\s*\|\s*$/,'').replace(/\s{2,}/g,' ').trim();}
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function fmt(d){try{return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});}catch(e){return d;}}
+  var LANG={hi:'हिंदी',ml:'മലയാളം',en:'English'};
+
+  function render(){
+    var list=videos.filter(function(v){
+      if(filter==='all')return true;
+      if(filter==='short')return v.short;
+      if(filter==='long')return !v.short;
+      return v.lang===filter;
+    });
+    grid.innerHTML=list.map(function(v){
+      var url=v.short?'https://www.youtube.com/shorts/'+v.id:'https://www.youtube.com/watch?v='+v.id;
+      return '<a class="card" href="'+url+'" target="_blank" rel="noopener">'+
+        '<div class="thumb" style="background-image:url(https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg)"><span class="badge">'+(LANG[v.lang]||'')+(v.short?' · Short':'')+'</span></div>'+
+        '<div class="t">'+esc(clean(v.title))+'</div><div class="d">'+fmt(v.date)+'</div></a>';
+    }).join('')||'<p>—</p>';
+  }
+
+  document.querySelectorAll('.chip').forEach(function(b){
+    b.addEventListener('click',function(){
+      filter=b.dataset.f;
+      document.querySelectorAll('.chip').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+      render();
+    });
+  });
+
+  fetch('videos.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(d){
+    videos=d; render();
+    var latest=d[0];
+    if(latest){
+      if(!latest.short)player.classList.add('wide');
+      player.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+latest.id+'?rel=0" title="'+esc(clean(latest.title))+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
+    }
+  }).catch(function(){grid.innerHTML='<p>Videos are on <a href="https://www.youtube.com/@ShankhaAmrit">YouTube</a>.</p>';});
+})();
+</script>
+</body>
+</html>
