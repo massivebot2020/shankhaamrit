@@ -216,6 +216,7 @@ h1{{font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.35;color:var(--red-deep);ma
 .desc p{{margin-bottom:14px}}
 .cta{{margin:22px 0;display:flex;gap:10px;flex-wrap:wrap}}
 .btn.alt{{background:var(--red);color:#fbeed2}}
+.btn.wa{{background:#1f9d55;color:#fff}}
 h2{{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:var(--red);margin:46px 0 18px}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}}
 .card{{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}}
@@ -238,7 +239,7 @@ footer a{{color:var(--gold-soft)}}
 <div class="player"><iframe src="https://www.youtube-nocookie.com/embed/{id}?rel=0" title="{title}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
 <div>
 <div class="desc">{desc}</div>
-<div class="cta"><a class="btn alt" href="{yt}" target="_blank" rel="noopener">▶ YouTube पर देखें · Watch on YouTube</a><a class="btn" href="{sub}" target="_blank" rel="noopener">Subscribe</a></div>
+<div class="cta"><a class="btn alt" href="{yt}" target="_blank" rel="noopener">▶ YouTube पर देखें · Watch on YouTube</a><a class="btn" href="{sub}" target="_blank" rel="noopener">Subscribe</a><a class="btn wa" href="{wa}" target="_blank" rel="noopener">{walabel}</a></div>
 </div>
 </div>
 {other}
@@ -281,7 +282,9 @@ def story_page(v, videos):
                        ratio="9/16" if v["short"] else "16/9", pmax="340px" if v["short"] else "100%",
                        sub=SUB, langname=LANG.get(v["lang"], ""), kind=" · Short" if v["short"] else "",
                        date=v["date"], id=v["id"], desc=para(v.get("desc", "")), yt=yt(v),
-                       other=other, related=related)
+                       other=other, related=related,
+                       wa="https://wa.me/?text=" + urllib.parse.quote(clean(v["title"]) + "\n" + url, safe=""),
+                       walabel={"hi": "WhatsApp पर भेजें", "ml": "WhatsApp-ൽ പങ്കിടൂ"}.get(v["lang"], "Share on WhatsApp"))
 
 
 def between(text, tag, inner):
