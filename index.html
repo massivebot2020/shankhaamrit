@@ -3,13 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shankha Amrit · शंखामृत · ശംഖാമൃതം</title>
-<meta name="description" content="Shankha Amrit — Hindu and Kerala temple stories in Hindi and Malayalam. शंखामृत — पौराणिक कथाएँ। ശംഖാമൃതം — പുണ്യകഥകൾ.">
-<meta property="og:title" content="Shankha Amrit · शंखामृत · ശംഖാമൃതം">
-<meta property="og:description" content="Kerala temple legends and Hindu stories in Hindi and Malayalam.">
+<title>शंखामृत Shankha Amrit · ശംഖാമൃതം — Kerala Temple Stories & Pauranik Katha in Hindi, Malayalam</title>
+<meta name="description" content="शंखामृत — केरल के मंदिरों की पौराणिक कथाएँ हिंदी में: गुरुवायूर, सबरीमला अय्यप्पा, मुत्तप्पन, आदि शंकराचार्य। ശംഖാമൃതം — കേരള ക്ഷേത്ര ഐതിഹ്യങ്ങൾ മലയാളത്തിൽ. Kerala temple legends in Hindi and Malayalam.">
+<link rel="canonical" href="https://shankhaamrit.com/">
+<meta property="og:title" content="शंखामृत Shankha Amrit · ശംഖാമൃതം">
+<meta property="og:description" content="Kerala temple legends and Pauranik stories in Hindi and Malayalam — Guruvayur, Sabarimala, Muthappan, Adi Shankaracharya.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://shankhaamrit.com/">
+<meta property="og:site_name" content="Shankha Amrit">
+<meta property="og:image" content="https://i.ytimg.com/vi/SJdXgC4Ay-A/hqdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#7a1f12">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%237a1f12'/%3E%3Cpath d='M20 44c-4-10 2-24 14-26 8-1 13 5 11 11-2 5-8 6-11 3 5 1 7-4 4-6-4-3-11 1-12 9-1 5 1 9 4 11z' fill='%23e8b54a'/%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
@@ -99,6 +104,7 @@ footer a{color:var(--gold-soft)}
   nav a:not(.btn){display:none}
 }
 </style>
+<!--LD:START--><!--LD:END-->
 </head>
 <body>
 
@@ -150,7 +156,7 @@ footer a{color:var(--gold-soft)}
           <button class="chip" data-f="short" aria-pressed="false">Shorts</button>
         </div>
       </div>
-      <div class="grid" id="grid"></div>
+      <div class="grid" id="grid"><!--CARDS:START--><!--CARDS:END--></div>
       <div class="more"><a class="btn" href="https://www.youtube.com/@ShankhaAmrit/videos" target="_blank" rel="noopener">और देखें · More on YouTube</a></div>
     </div>
   </section>
@@ -158,6 +164,8 @@ footer a{color:var(--gold-soft)}
   <section class="about" id="about">
     <div class="wrap">
       <h2>परिचय · About<small>शंख की ध्वनि, कथा का अमृत</small></h2>
+      <p class="lead">गुरुवायूरप्पन और उण्णिकण्णन, सबरीमला के स्वामी अय्यप्पा, पारस्सिनिकडवु के मुत्तप्पन, आदि शंकराचार्य, सुदामा और श्रीकृष्ण — केरल के मंदिरों की पौराणिक कथाएँ और भक्ति कहानियाँ, हिंदी में।</p>
+      <p class="lead">ഗുരുവായൂരപ്പൻ, ശബരിമല അയ്യപ്പൻ, പറശ്ശിനിക്കടവ് മുത്തപ്പൻ, ആദി ശങ്കരൻ — കേരളത്തിലെ ക്ഷേത്ര ഐതിഹ്യങ്ങളും പുരാണകഥകളും മലയാളത്തിൽ.</p>
       <p class="lead">Shankha Amrit retells the legends of Kerala's great temples and the timeless stories of the Puranas — Guruvayurappan and Unnikkannan, Swami Ayyappa, Sree Muthappan, Adi Shankaracharya and more — as illustrated films and Shorts for devotees everywhere.</p>
       <div class="cols">
         <div class="col"><h3>केरल की कथाएँ</h3><p>Temple legends from Guruvayur, Sabarimala, Parassinikadavu, Vaikom, Chottanikkara and Kalady.</p></div>
@@ -201,8 +209,8 @@ footer a{color:var(--gold-soft)}
       return v.lang===filter;
     });
     grid.innerHTML=list.map(function(v){
-      var url=v.short?'https://www.youtube.com/shorts/'+v.id:'https://www.youtube.com/watch?v='+v.id;
-      return '<a class="card" href="'+url+'" target="_blank" rel="noopener">'+
+      var url=v.path?'/story/'+v.path+'.html':(v.short?'https://www.youtube.com/shorts/'+v.id:'https://www.youtube.com/watch?v='+v.id);
+      return '<a class="card" href="'+url+'">'+
         '<div class="thumb" style="background-image:url(https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg)"><span class="badge">'+(LANG[v.lang]||'')+(v.short?' · Short':'')+'</span></div>'+
         '<div class="t">'+esc(clean(v.title))+'</div><div class="d">'+fmt(v.date)+'</div></a>';
     }).join('')||'<p>—</p>';
@@ -218,8 +226,14 @@ footer a{color:var(--gold-soft)}
 
   fetch('videos.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(d){
     videos=d; render();
+    var STOP={katha:1,story:1,malayalam:1,hindi:1,shorts:1,short:1,devotional:1,kerala:1,temple:1};
+    function keys(t){return (clean(t).match(/[A-Za-z]{4,}/g)||[]).map(function(w){return w.toLowerCase();}).filter(function(w){return !STOP[w];});}
+    function same(a,b){if(a.date===b.date)return true;var ka=keys(a.title);return keys(b.title).some(function(w){return ka.indexOf(w)>=0;});}
+    function shorts(l){return d.filter(function(x){return x.lang===l&&x.short;});}
+    var pick={ml:shorts('ml')[0]};
+    pick.hi=shorts('hi').filter(function(x){return !pick.ml||!same(pick.ml,x);})[0]||shorts('hi')[0];
     ['ml','hi'].forEach(function(l){
-      var v=d.filter(function(x){return x.lang===l&&x.short;})[0]||d.filter(function(x){return x.lang===l;})[0], el=document.getElementById('p-'+l);
+      var v=pick[l], el=document.getElementById('p-'+l);
       if(!v){el.parentNode.style.display='none';return;}
       el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.id+'?rel=0" title="'+esc(clean(v.title))+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
     });
