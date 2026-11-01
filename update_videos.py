@@ -57,7 +57,19 @@ def thumb(v):
 
 
 def fetch(src=None):
-    data = open(src, "rb").read() if src else urllib.request.urlopen(FEED, timeout=30).read()
+    if src:
+        data = open(src, "rb").read()
+    else:
+        data = None
+        for attempt in range(4):
+            try:
+                data = urllib.request.urlopen(FEED, timeout=30).read(); break
+            except Exception as e:  # YouTube's feed sometimes returns a brief 404/5xx
+                print(f"Feed attempt {attempt + 1} failed: {e}")
+                if attempt < 3: time.sleep(20 * (attempt + 1))
+        if data is None:
+            print("Feed unavailable; keeping existing videos.json entries this run.")
+            return []
     out = []
     for e in ET.fromstring(data).findall("a:entry", NS):
         g = e.find("m:group", NS)
